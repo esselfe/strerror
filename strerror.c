@@ -13,7 +13,7 @@ static const struct option long_options[] = {
 };
 static const char *short_options = "hl";
 
-char errno_str[18];
+char errno_str[64];
 
 void Help (void) {
 	printf ("Usage: strerror { ERRNUM | ERRNAME }\nexample: 'strerror 4; strerror ENOSYS; strerror $?;'\n"
