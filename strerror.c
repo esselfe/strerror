@@ -6,12 +6,15 @@
 #include <ctype.h>
 #include <getopt.h>
 
+const char *strerror_version_string = "0.1.2";
+
 static const struct option long_options[] = {
 	{"help", no_argument, NULL, 'h'},
+	{"version", no_argument, NULL, 'V'},
 	{"list", no_argument, NULL, 'l'},
 	{NULL, 0, NULL, 0}
 };
-static const char *short_options = "hl";
+static const char *short_options = "hVl";
 
 char errno_str[64];
 
@@ -33,6 +36,10 @@ int main (int argc, char **argv) {
 		case 'h':
 			Help ();
 			exit (1);
+		case 'V':
+			printf("strerror %s\n", strerror_version_string);
+			exit(0);
+			break;
 		case 'l':
 			for (cnt = 0; cnt <= 134; cnt++) {
 				printf ("%d (%s): %s\n", cnt, Errno2Varname(cnt), strerror(cnt));

@@ -4,7 +4,7 @@ LDFLAGS =
 LDFLAGS_SHARED = $(LDFLAGS)
 LDFLAGS_STATIC = -static $(LDFLAGS)
 PROGNAME = strerror
-PROGNAME_STATIC = strerror.stx
+PROGNAME_STATIC = strerror.static
 
 .PHONY: all all-static clean
 
