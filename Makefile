@@ -1,5 +1,5 @@
 
-CFLAGS = -std=c11 -Wall -Werror -Wextra -O0 -g
+CFLAGS = -std=c11 -Wall -O2 -g
 LDFLAGS = 
 LDFLAGS_SHARED = $(LDFLAGS)
 LDFLAGS_STATIC = -static $(LDFLAGS)
