@@ -6,7 +6,7 @@
 #include <ctype.h>
 #include <getopt.h>
 
-const char *strerror_version_string = "0.1.2";
+const char *strerror_version_string = "0.1.3";
 
 static const struct option long_options[] = {
 	{"help", no_argument, NULL, 'h'},
