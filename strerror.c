@@ -18,456 +18,456 @@ static const char *short_options = "hVl";
 
 char errno_str[64];
 
-void Help (void) {
-	printf ("Usage: strerror { ERRNUM | ERRNAME }\nexample: 'strerror 4; strerror ENOSYS; strerror $?;'\n"
+void Help(void) {
+	printf("Usage: strerror { ERRNUM | ERRNAME }\nexample: 'strerror 4; strerror ENOSYS; strerror $?;'\n"
 		"strerror { -h | --help } shows this usage/help message.\n"
 		"strerror { -l | --list } shows all error numbers with their associated system descriptions.\n");
 }
 
-char *Errno2Varname (int errnum);
-int Varname2Int (char *varname);
+char *Errno2Varname(int errnum);
+int Varname2Int(char *varname);
 
-int main (int argc, char **argv) {
+int main(int argc, char **argv) {
 	int c, cnt;
 	while (1) {
-		c = getopt_long (argc, argv, short_options, long_options, NULL);
+		c = getopt_long(argc, argv, short_options, long_options, NULL);
 		if (c == -1) break;
 		switch (c) {
 		case 'h':
-			Help ();
-			exit (1);
+			Help();
+			exit(1);
 		case 'V':
 			printf("strerror %s\n", strerror_version_string);
 			exit(0);
 			break;
 		case 'l':
-			for (cnt = 0; cnt <= 134; cnt++) {
-				printf ("%d (%s): %s\n", cnt, Errno2Varname(cnt), strerror(cnt));
+			for(cnt = 0; cnt <= 134; cnt++) {
+				printf("%d(%s): %s\n", cnt, Errno2Varname(cnt), strerror(cnt));
 			}
-			exit (0);
+			exit(0);
 		default:
-			printf ("strerror error: Unbranched argument:#%d:%c:\n", c, (char)c);
+			printf("strerror error: Unbranched argument:#%d:%c:\n", c,(char)c);
 		}
 	}
 
 	int errnum = 0;
 	for (cnt = 1; cnt < argc; cnt++) {
 		if (isdigit(argv[cnt][0]))
-			errnum = atoi (argv[cnt]);
+			errnum = atoi(argv[cnt]);
 		else if (argv[cnt][0] == 'E' || argv[cnt][0] == 'e')
-			errnum = Varname2Int (argv[cnt]);
-		printf ("%d (%s): %s\n", errnum, Errno2Varname(errnum), strerror(errnum));
+			errnum = Varname2Int(argv[cnt]);
+		printf("%d(%s): %s\n", errnum, Errno2Varname(errnum), strerror(errnum));
 	}
 
 	return 0;
 }
 
-char *Errno2Varname (int errnum) {
-	switch (errnum) {
+char *Errno2Varname(int errnum) {
+	switch(errnum) {
 	case EPERM: // 1
-		sprintf (errno_str, "EPERM");
+		sprintf(errno_str, "EPERM");
 		break;
 	case ENOENT: // 2	
-		sprintf (errno_str, "ENOENT");
+		sprintf(errno_str, "ENOENT");
 		break;
 	case ESRCH: // 3	
-		sprintf (errno_str, "ESRCH");
+		sprintf(errno_str, "ESRCH");
 		break;
 	case EINTR: // 4	
-		sprintf (errno_str, "EINTR");
+		sprintf(errno_str, "EINTR");
 		break;
 	case EIO: // 5	
-		sprintf (errno_str, "EIO");
+		sprintf(errno_str, "EIO");
 		break;
 	case ENXIO: // 6	
-		sprintf (errno_str, "ENXIO");
+		sprintf(errno_str, "ENXIO");
 		break;
 	case E2BIG: // 7	
-		sprintf (errno_str, "E2BIG");
+		sprintf(errno_str, "E2BIG");
 		break;
 	case ENOEXEC: // 8	
-		sprintf (errno_str, "ENOEXEC");
+		sprintf(errno_str, "ENOEXEC");
 		break;
 	case EBADF: // 9	
-		sprintf (errno_str, "EBADF");
+		sprintf(errno_str, "EBADF");
 		break;
 	case ECHILD: // 10	
-		sprintf (errno_str, "ECHILD");
+		sprintf(errno_str, "ECHILD");
 		break;
 	case EAGAIN: // 11	
-		sprintf (errno_str, "EAGAIN");
+		sprintf(errno_str, "EAGAIN");
 		break;
 	case ENOMEM: // 12	
-		sprintf (errno_str, "ENOMEM");
+		sprintf(errno_str, "ENOMEM");
 		break;
 	case EACCES: // 13	
-		sprintf (errno_str, "EACCES");
+		sprintf(errno_str, "EACCES");
 		break;
 	case EFAULT: // 14	
-		sprintf (errno_str, "EFAULT");
+		sprintf(errno_str, "EFAULT");
 		break;
 	case ENOTBLK: // 15	
-		sprintf (errno_str, "ENOTBLK");
+		sprintf(errno_str, "ENOTBLK");
 		break;
 	case EBUSY: // 16	
-		sprintf (errno_str, "EBUSY");
+		sprintf(errno_str, "EBUSY");
 		break;
 	case EEXIST: // 17	
-		sprintf (errno_str, "EEXIST");
+		sprintf(errno_str, "EEXIST");
 		break;
 	case EXDEV: // 18	
-		sprintf (errno_str, "EXDEV");
+		sprintf(errno_str, "EXDEV");
 		break;
 	case ENODEV: // 19	
-		sprintf (errno_str, "ENODEV");
+		sprintf(errno_str, "ENODEV");
 		break;
 	case ENOTDIR: // 20	
-		sprintf (errno_str, "ENOTDIR");
+		sprintf(errno_str, "ENOTDIR");
 		break;
 	case EISDIR: // 21	
-		sprintf (errno_str, "EISDIR");
+		sprintf(errno_str, "EISDIR");
 		break;
 	case EINVAL: // 22	
-		sprintf (errno_str, "EINVAL");
+		sprintf(errno_str, "EINVAL");
 		break;
 	case ENFILE: // 23	
-		sprintf (errno_str, "ENFILE");
+		sprintf(errno_str, "ENFILE");
 		break;
 	case EMFILE: // 24	
-		sprintf (errno_str, "EMFILE");
+		sprintf(errno_str, "EMFILE");
 		break;
 	case ENOTTY: // 25	
-		sprintf (errno_str, "ENOTTY");
+		sprintf(errno_str, "ENOTTY");
 		break;
 	case ETXTBSY: // 26	
-		sprintf (errno_str, "ETXTBSY");
+		sprintf(errno_str, "ETXTBSY");
 		break;
 	case EFBIG: // 27	
-		sprintf (errno_str, "EFBIG");
+		sprintf(errno_str, "EFBIG");
 		break;
 	case ENOSPC: // 28	
-		sprintf (errno_str, "ENOSPC");
+		sprintf(errno_str, "ENOSPC");
 		break;
 	case ESPIPE: // 29	
-		sprintf (errno_str, "ESPIPE");
+		sprintf(errno_str, "ESPIPE");
 		break;
 	case EROFS: // 30	
-		sprintf (errno_str, "EROFS");
+		sprintf(errno_str, "EROFS");
 		break;
 	case EMLINK: // 31	
-		sprintf (errno_str, "EMLINK");
+		sprintf(errno_str, "EMLINK");
 		break;
 	case EPIPE: // 32	
-		sprintf (errno_str, "EPIPE");
+		sprintf(errno_str, "EPIPE");
 		break;
 	case EDOM: // 33	
-		sprintf (errno_str, "EDOM");
+		sprintf(errno_str, "EDOM");
 		break;
 	case ERANGE: // 34	
-		sprintf (errno_str, "ERANGE");
+		sprintf(errno_str, "ERANGE");
 		break;
 	case EDEADLK: // 35	
-		sprintf (errno_str, "EDEADLK");
+		sprintf(errno_str, "EDEADLK");
 		break;
 	case ENAMETOOLONG: // 36	
-		sprintf (errno_str, "ENAMETOOLONG");
+		sprintf(errno_str, "ENAMETOOLONG");
 		break;
 	case ENOLCK: // 37	
-		sprintf (errno_str, "ENOLCK");
+		sprintf(errno_str, "ENOLCK");
 		break;
 	case ENOSYS: // 38	
-		sprintf (errno_str, "ENOSYS");
+		sprintf(errno_str, "ENOSYS");
 		break;
 	case ENOTEMPTY: // 39	
-		sprintf (errno_str, "ENOEMPTY");
+		sprintf(errno_str, "ENOEMPTY");
 		break;
 	case ELOOP: // 40	
-		sprintf (errno_str, "ELOOP");
+		sprintf(errno_str, "ELOOP");
 		break;
 //	case EWOULDBLOCK	EAGAIN	
-//		sprintf (errno_str, "");
+//		sprintf(errno_str, "");
 //		break;
 	case ENOMSG: // 42
-		sprintf (errno_str, "ENOMSG");
+		sprintf(errno_str, "ENOMSG");
 		break;
 	case EIDRM: // 43	
-		sprintf (errno_str, "EIDRM");
+		sprintf(errno_str, "EIDRM");
 		break;
 	case ECHRNG: // 44	
-		sprintf (errno_str, "ECHRNG");
+		sprintf(errno_str, "ECHRNG");
 		break;
 	case EL2NSYNC: // 45	
-		sprintf (errno_str, "EL2NSYNC");
+		sprintf(errno_str, "EL2NSYNC");
 		break;
 	case EL3HLT: // 46	
-		sprintf (errno_str, "EL3HLT");
+		sprintf(errno_str, "EL3HLT");
 		break;
 	case EL3RST: // 47	
-		sprintf (errno_str, "EL3RST");
+		sprintf(errno_str, "EL3RST");
 		break;
 	case ELNRNG: // 48	
-		sprintf (errno_str, "ELNRNG");
+		sprintf(errno_str, "ELNRNG");
 		break;
 	case EUNATCH: // 49	
-		sprintf (errno_str, "EUNATCH");
+		sprintf(errno_str, "EUNATCH");
 		break;
 	case ENOCSI: // 50	
-		sprintf (errno_str, "ENOCSI");
+		sprintf(errno_str, "ENOCSI");
 		break;
 	case EL2HLT: // 51	
-		sprintf (errno_str, "EL2HLT");
+		sprintf(errno_str, "EL2HLT");
 		break;
 	case EBADE: // 52	
-		sprintf (errno_str, "EBADE");
+		sprintf(errno_str, "EBADE");
 		break;
 	case EBADR: // 53	
-		sprintf (errno_str, "EBADR");
+		sprintf(errno_str, "EBADR");
 		break;
 	case EXFULL: // 54	
-		sprintf (errno_str, "EXFULL");
+		sprintf(errno_str, "EXFULL");
 		break;
 	case ENOANO: // 55	
-		sprintf (errno_str, "ENOANO");
+		sprintf(errno_str, "ENOANO");
 		break;
 	case EBADRQC: // 56	
-		sprintf (errno_str, "EBADRQC");
+		sprintf(errno_str, "EBADRQC");
 		break;
 	case EBADSLT: // 57	
-		sprintf (errno_str, "EBADSLT");
+		sprintf(errno_str, "EBADSLT");
 		break;
 	case EBFONT: // 59	
-		sprintf (errno_str, "EBFONT");
+		sprintf(errno_str, "EBFONT");
 		break;
 	case ENOSTR: // 60	
-		sprintf (errno_str, "ENOSTR");
+		sprintf(errno_str, "ENOSTR");
 		break;
 	case ENODATA: // 61	
-		sprintf (errno_str, "ENODATA");
+		sprintf(errno_str, "ENODATA");
 		break;
 	case ETIME: // 62	
-		sprintf (errno_str, "ETIME");
+		sprintf(errno_str, "ETIME");
 		break;
 	case ENOSR: // 63	
-		sprintf (errno_str, "ENOSR");
+		sprintf(errno_str, "ENOSR");
 		break;
 	case ENONET: // 64	
-		sprintf (errno_str, "ENONET");
+		sprintf(errno_str, "ENONET");
 		break;
 	case ENOPKG: // 65	
-		sprintf (errno_str, "ENOPKG");
+		sprintf(errno_str, "ENOPKG");
 		break;
 	case EREMOTE: // 66	
-		sprintf (errno_str, "EREMOTE");
+		sprintf(errno_str, "EREMOTE");
 		break;
 	case ENOLINK: // 67	
-		sprintf (errno_str, "ENOLINK");
+		sprintf(errno_str, "ENOLINK");
 		break;
 	case EADV: // 68	
-		sprintf (errno_str, "EADV");
+		sprintf(errno_str, "EADV");
 		break;
 	case ESRMNT: // 69	
-		sprintf (errno_str, "ESRMNT");
+		sprintf(errno_str, "ESRMNT");
 		break;
 	case ECOMM: //70	
-		sprintf (errno_str, "ECOMM");
+		sprintf(errno_str, "ECOMM");
 		break;
 	case EPROTO: // 71	
-		sprintf (errno_str, "EPROTO");
+		sprintf(errno_str, "EPROTO");
 		break;
 	case EMULTIHOP: // 72	
-		sprintf (errno_str, "EMULTIHOP");
+		sprintf(errno_str, "EMULTIHOP");
 		break;
 	case EDOTDOT: // 73	
-		sprintf (errno_str, "EDOTDOT");
+		sprintf(errno_str, "EDOTDOT");
 		break;
 	case EBADMSG: // 74	
-		sprintf (errno_str, "EBADMSG");
+		sprintf(errno_str, "EBADMSG");
 		break;
 	case EOVERFLOW: // 75	
-		sprintf (errno_str, "EOVERFLOW");
+		sprintf(errno_str, "EOVERFLOW");
 		break;
 	case ENOTUNIQ: // 76	
-		sprintf (errno_str, "ENOTUNIQ");
+		sprintf(errno_str, "ENOTUNIQ");
 		break;
 	case EBADFD: // 77	
-		sprintf (errno_str, "EBADFD");
+		sprintf(errno_str, "EBADFD");
 		break;
 	case EREMCHG: // 78	
-		sprintf (errno_str, "EREMCHG");
+		sprintf(errno_str, "EREMCHG");
 		break;
 	case ELIBACC: // 79	
-		sprintf (errno_str, "ELIBACC");
+		sprintf(errno_str, "ELIBACC");
 		break;
 	case ELIBBAD: // 80	
-		sprintf (errno_str, "ELIBBAD");
+		sprintf(errno_str, "ELIBBAD");
 		break;
 	case ELIBSCN: // 81	
-		sprintf (errno_str, "ELIBSCN");
+		sprintf(errno_str, "ELIBSCN");
 		break;
 	case ELIBMAX: // 82	
-		sprintf (errno_str, "ELIBMAX");
+		sprintf(errno_str, "ELIBMAX");
 		break;
 	case ELIBEXEC: // 83	
-		sprintf (errno_str, "ELIBEXEC");
+		sprintf(errno_str, "ELIBEXEC");
 		break;
 	case EILSEQ: // 84	
-		sprintf (errno_str, "EILSEQ");
+		sprintf(errno_str, "EILSEQ");
 		break;
 	case ERESTART: // 85	
-		sprintf (errno_str, "ERESTART");
+		sprintf(errno_str, "ERESTART");
 		break;
 	case ESTRPIPE: // 86	
-		sprintf (errno_str, "ESTRPIPE");
+		sprintf(errno_str, "ESTRPIPE");
 		break;
 	case EUSERS: // 87	
-		sprintf (errno_str, "EUSERS");
+		sprintf(errno_str, "EUSERS");
 		break;
 	case ENOTSOCK: // 88	
-		sprintf (errno_str, "ENOTSOCK");
+		sprintf(errno_str, "ENOTSOCK");
 		break;
 	case EDESTADDRREQ: // 89	
-		sprintf (errno_str, "EDESTADDRREQ");
+		sprintf(errno_str, "EDESTADDRREQ");
 		break;
 	case EMSGSIZE: // 90	
-		sprintf (errno_str, "EMSGSIZE");
+		sprintf(errno_str, "EMSGSIZE");
 		break;
 	case EPROTOTYPE: // 91	
-		sprintf (errno_str, "EPROTOTYPE");
+		sprintf(errno_str, "EPROTOTYPE");
 		break;
 	case ENOPROTOOPT: // 92	
-		sprintf (errno_str, "ENOPROTOOPT");
+		sprintf(errno_str, "ENOPROTOOPT");
 		break;
 	case EPROTONOSUPPORT: // 93	
-		sprintf (errno_str, "EPROTONOSUPPORT");
+		sprintf(errno_str, "EPROTONOSUPPORT");
 		break;
 	case ESOCKTNOSUPPORT: // 94	
-		sprintf (errno_str, "ESOCKTNOSUPPORT");
+		sprintf(errno_str, "ESOCKTNOSUPPORT");
 		break;
 	case EOPNOTSUPP: // 95	
-		sprintf (errno_str, "EOPNOTSUPP");
+		sprintf(errno_str, "EOPNOTSUPP");
 		break;
 	case EPFNOSUPPORT: // 96	
-		sprintf (errno_str, "EPFNOSUPPORT");
+		sprintf(errno_str, "EPFNOSUPPORT");
 		break;
 	case EAFNOSUPPORT: // 97	
-		sprintf (errno_str, "EAFNOSUPPORT");
+		sprintf(errno_str, "EAFNOSUPPORT");
 		break;
 	case EADDRINUSE: // 98	
-		sprintf (errno_str, "EADDRINUSE");
+		sprintf(errno_str, "EADDRINUSE");
 		break;
 	case EADDRNOTAVAIL: // 99	
-		sprintf (errno_str, "EADDRNOTAVAIL");
+		sprintf(errno_str, "EADDRNOTAVAIL");
 		break;
 	case ENETDOWN: // 100	
-		sprintf (errno_str, "ENETDOWN");
+		sprintf(errno_str, "ENETDOWN");
 		break;
 	case ENETUNREACH: // 101	
-		sprintf (errno_str, "ENETUNREACH");
+		sprintf(errno_str, "ENETUNREACH");
 		break;
 	case ENETRESET: // 102	
-		sprintf (errno_str, "ENETRESET");
+		sprintf(errno_str, "ENETRESET");
 		break;
 	case ECONNABORTED: // 103	
-		sprintf (errno_str, "ECONNABORTED");
+		sprintf(errno_str, "ECONNABORTED");
 		break;
 	case ECONNRESET: // 104	
-		sprintf (errno_str, "ECONNRESET");
+		sprintf(errno_str, "ECONNRESET");
 		break;
 	case ENOBUFS: // 105	
-		sprintf (errno_str, "ENOBUFS");
+		sprintf(errno_str, "ENOBUFS");
 		break;
 	case EISCONN: // 106	
-		sprintf (errno_str, "EISCONN");
+		sprintf(errno_str, "EISCONN");
 		break;
 	case ENOTCONN: // 107	
-		sprintf (errno_str, "ENOTCONN");
+		sprintf(errno_str, "ENOTCONN");
 		break;
 	case ESHUTDOWN: // 108	
-		sprintf (errno_str, "ESHUTDOWN");
+		sprintf(errno_str, "ESHUTDOWN");
 		break;
 	case ETOOMANYREFS: // 109	
-		sprintf (errno_str, "ETOOMANYREFS");
+		sprintf(errno_str, "ETOOMANYREFS");
 		break;
 	case ETIMEDOUT: // 110	
-		sprintf (errno_str, "ETIMEDOUT");
+		sprintf(errno_str, "ETIMEDOUT");
 		break;
 	case ECONNREFUSED: // 111	
-		sprintf (errno_str, "ECONNREFUSED");
+		sprintf(errno_str, "ECONNREFUSED");
 		break;
 	case EHOSTDOWN: // 112	
-		sprintf (errno_str, "EHOSTDOWN");
+		sprintf(errno_str, "EHOSTDOWN");
 		break;
 	case EHOSTUNREACH: // 113	
-		sprintf (errno_str, "EHOSTUNREACH");
+		sprintf(errno_str, "EHOSTUNREACH");
 		break;
 	case EALREADY: // 114	
-		sprintf (errno_str, "EALREADY");
+		sprintf(errno_str, "EALREADY");
 		break;
 	case EINPROGRESS: // 115	
-		sprintf (errno_str, "EINPROGRESS");
+		sprintf(errno_str, "EINPROGRESS");
 		break;
 	case ESTALE: // 116	
-		sprintf (errno_str, "ESTALE");
+		sprintf(errno_str, "ESTALE");
 		break;
 	case EUCLEAN: // 117	
-		sprintf (errno_str, "EUCLEAN");
+		sprintf(errno_str, "EUCLEAN");
 		break;
 	case ENOTNAM: // 118	
-		sprintf (errno_str, "ENOTNAM");
+		sprintf(errno_str, "ENOTNAM");
 		break;
 	case ENAVAIL: // 119	
-		sprintf (errno_str, "ENAVAIL");
+		sprintf(errno_str, "ENAVAIL");
 		break;
 	case EISNAM: // 120	
-		sprintf (errno_str, "EISNAM");
+		sprintf(errno_str, "EISNAM");
 		break;
 	case EREMOTEIO: // 121	
-		sprintf (errno_str, "EREMOTEIO");
+		sprintf(errno_str, "EREMOTEIO");
 		break;
 	case EDQUOT: // 122	
-		sprintf (errno_str, "EDQUOT");
+		sprintf(errno_str, "EDQUOT");
 		break;
 	case ENOMEDIUM: // 123	
-		sprintf (errno_str, "ENOMEDIUM");
+		sprintf(errno_str, "ENOMEDIUM");
 		break;
 	case EMEDIUMTYPE: // 124	
-		sprintf (errno_str, "EMEDIUMTYPE");
+		sprintf(errno_str, "EMEDIUMTYPE");
 		break;
 	case ECANCELED: // 125	
-		sprintf (errno_str, "ECANCELED");
+		sprintf(errno_str, "ECANCELED");
 		break;
 	case ENOKEY: // 126	
-		sprintf (errno_str, "ENOKEY");
+		sprintf(errno_str, "ENOKEY");
 		break;
 	case EKEYEXPIRED: // 127	
-		sprintf (errno_str, "EKEYEXPIRED");
+		sprintf(errno_str, "EKEYEXPIRED");
 		break;
 	case EKEYREVOKED: // 128	
-		sprintf (errno_str, "EKEYREVOKED");
+		sprintf(errno_str, "EKEYREVOKED");
 		break;
 	case EKEYREJECTED: // 129	
-		sprintf (errno_str, "EKEYREJECTED");
+		sprintf(errno_str, "EKEYREJECTED");
 		break;
 	case EOWNERDEAD: // 130	
-		sprintf (errno_str, "EOWNERDEAD");
+		sprintf(errno_str, "EOWNERDEAD");
 		break;
 	case ENOTRECOVERABLE: //131	
-		sprintf (errno_str, "ENOTRECOVERABLE");
+		sprintf(errno_str, "ENOTRECOVERABLE");
 		break;
 	case ERFKILL: // 132	
-		sprintf (errno_str, "ERFKILL");
+		sprintf(errno_str, "ERFKILL");
 		break;
 	case EHWPOISON: // 133	
-		sprintf (errno_str, "EHWPOISON");
+		sprintf(errno_str, "EHWPOISON");
 		break;
 	default:
-		sprintf (errno_str, "errno_to_varname():wrong_errno: %d", errnum);
+		sprintf(errno_str, "errno_to_varname():wrong_errno: %d", errnum);
 		break;
 	}
 	return errno_str;
 }
 
-int Varname2Int (char *varname) {
+int Varname2Int(char *varname) {
 	if (strcmp(varname,"EPERM")==0) return 1;
 	else if (strcmp(varname,"ENOENT")==0) return 2;
 	else if (strcmp(varname,"ESRCH")==0) return 3;
@@ -600,7 +600,7 @@ int Varname2Int (char *varname) {
 	else if (strcmp(varname,"ERFKILL")==0) return 132;
 	else if (strcmp(varname,"EHWPOISON")==0) return 133;
 	else {
-		fprintf (stderr, "strerror error: Varname2Int(): wrong varname: %s", varname);
+		fprintf(stderr, "strerror error: Varname2Int(): wrong varname: %s", varname);
 		return -256;
 	}
 }
