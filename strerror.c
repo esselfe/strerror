@@ -6,7 +6,7 @@
 #include <ctype.h>
 #include <getopt.h>
 
-const char *strerror_version_string = "0.1.3";
+const char *strerror_version_string = "0.1.4";
 
 static const struct option long_options[] = {
 	{"help", no_argument, NULL, 'h'},
@@ -28,7 +28,7 @@ char *Errno2Varname (int errnum);
 int Varname2Int (char *varname);
 
 int main (int argc, char **argv) {
-	int c, cnt, errnum;
+	int c, cnt, errnum = 0;
 	while (1) {
 		c = getopt_long (argc, argv, short_options, long_options, NULL);
 		if (c == -1) break;
