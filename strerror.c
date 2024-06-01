@@ -28,7 +28,7 @@ char *Errno2Varname (int errnum);
 int Varname2Int (char *varname);
 
 int main (int argc, char **argv) {
-	int c, cnt, errnum = 0;
+	int c, cnt;
 	while (1) {
 		c = getopt_long (argc, argv, short_options, long_options, NULL);
 		if (c == -1) break;
@@ -50,6 +50,7 @@ int main (int argc, char **argv) {
 		}
 	}
 
+	int errnum = 0;
 	for (cnt = 1; cnt < argc; cnt++) {
 		if (isdigit(argv[cnt][0]))
 			errnum = atoi (argv[cnt]);
